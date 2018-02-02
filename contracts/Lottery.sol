@@ -42,7 +42,7 @@ contract Lottery {
     event BetRevealed(address lotteryId, address user);
     event WinnerRevealed(address lotteryId, address user);
 
-    function createLottery(uint _betAmount) public returns (address lotteryId){
+    function createLottery(uint _betAmount) public returns (address lotteryId) {
         lotteryId = msg.sender;
 
         require(isLotteryValid(lotteryId) == false);
@@ -66,12 +66,12 @@ contract Lottery {
       uint firstRevealTime,
       address winnerAddress
       ) {
-      LotteryData storage l = lotteries[_lotteryId];
+      LotteryData storage lottery = lotteries[_lotteryId];
       return (
-        l.betAmount,
-        l.firstBetTime,
-        l.firstRevealTime,
-        l.winnerAddress
+        lottery.betAmount,
+        lottery.firstBetTime,
+        lottery.firstRevealTime,
+        lottery.winnerAddress
         );
     }
 
@@ -87,18 +87,18 @@ contract Lottery {
         bytes32 oddNumberSaltedHash,
         uint oddNumber
       ) {
-        LotteryData storage l = lotteries[_lotteryId];
+        LotteryData storage lottery = lotteries[_lotteryId];
         return (
-          l.evenUser.userAddress,
-          l.evenUser.hasPlacedBet,
-          l.evenUser.hasRevealedBet,
-          l.evenUser.numberSaltedHash,
-          l.evenUser.number,
-          l.oddUser.userAddress,
-          l.oddUser.hasPlacedBet,
-          l.oddUser.hasRevealedBet,
-          l.oddUser.numberSaltedHash,
-          l.oddUser.number
+          lottery.evenUser.userAddress,
+          lottery.evenUser.hasPlacedBet,
+          lottery.evenUser.hasRevealedBet,
+          lottery.evenUser.numberSaltedHash,
+          lottery.evenUser.number,
+          lottery.oddUser.userAddress,
+          lottery.oddUser.hasPlacedBet,
+          lottery.oddUser.hasRevealedBet,
+          lottery.oddUser.numberSaltedHash,
+          lottery.oddUser.number
           );
       }
 
@@ -108,16 +108,16 @@ contract Lottery {
         lottery.state = State.PLACING_BETS;
     }
 
-    function isLotteryValid(address _lotteryId) private view returns (bool){
+    function isLotteryValid(address _lotteryId) private view returns (bool) {
         return lotteries[_lotteryId].state != State.UNINTIALIZED && lotteries[_lotteryId].state != State.LOTTERY_ENDED;
     }
 
     function getValidUser(LotteryData storage _lottery) private view returns (User storage validUser) {
-        if(msg.sender == _lottery.evenUser.userAddress) {
+        if (msg.sender == _lottery.evenUser.userAddress) {
             validUser = _lottery.evenUser;
         }
 
-        if(msg.sender == _lottery.oddUser.userAddress) {
+        if (msg.sender == _lottery.oddUser.userAddress) {
             validUser = _lottery.oddUser;
         }
 
@@ -145,7 +145,7 @@ contract Lottery {
 
         BetPlaced(_lotteryId, msg.sender);
 
-        if(lottery.oddUser.hasPlacedBet && lottery.evenUser.hasPlacedBet) {
+        if (lottery.oddUser.hasPlacedBet && lottery.evenUser.hasPlacedBet) {
             lottery.state = State.REVEALING_BETS;
             RevealState(_lotteryId);
             return;
@@ -168,7 +168,7 @@ contract Lottery {
 
         BetRevealed(_lotteryId, msg.sender);
 
-        if(lottery.oddUser.hasRevealedBet && lottery.evenUser.hasRevealedBet) {
+        if (lottery.oddUser.hasRevealedBet && lottery.evenUser.hasRevealedBet) {
             lottery.state = State.REVEALING_WINNER;
             revealWinner(_lotteryId);
             return;

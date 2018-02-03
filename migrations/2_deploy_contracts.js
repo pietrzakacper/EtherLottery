@@ -1,5 +1,5 @@
-const Lottery = artifacts.require("./Lottery.sol");
+const LotteryHelper = artifacts.require("./LotteryHelper.sol");
 
 module.exports = deployer => {
-  deployer.deploy(Lottery);
+  deployer.deploy(LotteryHelper);
 };

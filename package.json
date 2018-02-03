@@ -51,7 +51,8 @@
   "dependencies": {
     "dotenv": "^2.0.0",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "solidity-sha3": "^0.4.1"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -96,6 +97,11 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "globals": {
+      "contract": false,
+      "assert": false,
+      "artifacts": false
+    }
   }
 }

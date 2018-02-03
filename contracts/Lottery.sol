@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.19;
 
 contract Lottery {
     struct User {
@@ -10,7 +10,7 @@ contract Lottery {
     }
 
     enum State {
-        UNINTIALIZED,
+        UNINITIALIZED,
         LOTTERY_CREATED,
         PLACING_BETS,
         WITHDRAWING_FUNDS_AFTER_ONE_BET,
@@ -63,7 +63,7 @@ contract Lottery {
     }
 
     function isLotteryValid(address _lotteryId) private view returns (bool) {
-        return lotteries[_lotteryId].state != State.UNINTIALIZED && lotteries[_lotteryId].state != State.LOTTERY_ENDED;
+        return lotteries[_lotteryId].state != State.UNINITIALIZED && lotteries[_lotteryId].state != State.LOTTERY_ENDED;
     }
 
     function getValidUser(LotteryData storage _lottery) private view returns (User storage validUser) {
@@ -149,13 +149,16 @@ contract Lottery {
     }
 
     function claimPrize(address _lotteryId) external isWinner(_lotteryId) isValidState(_lotteryId, State.CLAIMING_PRIZE) {
-        msg.sender.transfer(2 * lotteries[_lotteryId].betAmount);
+        LotteryData storage lottery = lotteries[_lotteryId];
+
+        msg.sender.transfer(2 * lottery.betAmount);
+        lottery.state = State.LOTTERY_ENDED;
     }
 
     function cancelLottery(address _lotteryId, uint startingTime, State newState) private {
         LotteryData storage lottery = lotteries[_lotteryId];
 
-        require(startingTime + timeToEnableCanceling < now);
+        require(startingTime + timeToEnableCanceling <= now);
 
         lottery.state = newState;
     }
@@ -168,16 +171,18 @@ contract Lottery {
         cancelLottery(_lotteryId, lotteries[_lotteryId].firstRevealTime, State.WITHDRAWING_FUNDS_AFTER_ONE_REVEAL);
     }
 
-    function withdrawFunds(bool condition, uint amount) private {
+    function withdrawFunds(address _lotteryId, bool condition, uint amount) private {
         require(condition);
 
         msg.sender.transfer(amount);
+        lotteries[_lotteryId].state = State.LOTTERY_ENDED;        
     }
 
     function withdrawFundsAfterOneBet(address _lotteryId) public isValidState(_lotteryId, State.WITHDRAWING_FUNDS_AFTER_ONE_BET) {
         LotteryData storage lottery = lotteries[_lotteryId];
 
         withdrawFunds(
+            _lotteryId,
             getValidUser(lottery).hasPlacedBet,
             lottery.betAmount
         );
@@ -187,6 +192,7 @@ contract Lottery {
         LotteryData storage lottery = lotteries[_lotteryId];
 
         withdrawFunds(
+            _lotteryId,
             getValidUser(lottery).hasRevealedBet,
             lottery.betAmount
         );

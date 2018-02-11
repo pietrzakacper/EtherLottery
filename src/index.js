@@ -28,9 +28,9 @@ const store = createStore(
 sagaMiddleware.run(rootSaga)
 
 const theme = createMuiTheme({
-  palette: {
-    type: 'dark',
-  },
+  // palette: {
+  //   type: 'dark',
+  // },
 });
 
 render(

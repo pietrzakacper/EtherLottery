@@ -17,7 +17,7 @@ const getWeb3 = () => new Promise(function(resolve, reject) {
 
       console.log('Injected web3 detected.');
 
-      setTimeout( () => resolve(results), 1500)
+      resolve(results)
     } else {
       // Fallback to localhost if no web3 injection. We've configured this to
       // use the development console's port by default.

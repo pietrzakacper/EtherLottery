@@ -9,9 +9,9 @@ export const web3Injected = web3 => ({
     web3
 })
 
-export const setLotteryState = state => ({
-    type: actions.SET_LOTTERY_STATE,
-    state
+export const setPage = page => ({
+    type: actions.SET_PAGE,
+    page
 })
 
 export const createLotteryRequested = betAmount => ({
@@ -28,7 +28,17 @@ export const setLotteryContract = contract => ({
     contract
 })
 
-export const showError = msg => ({
-    type: actions.SHOW_ERROR,
-    msg
+export const setPageError = error => ({
+    type: actions.SET_PAGE_ERROR,
+    error
+})
+
+export const setLotteryId = id => ({
+    type: actions.SET_LOTTERY_ID,
+    id
+})
+
+export const setBetAmout = amount => ({
+    type: actions.SET_BET_AMOUNT,
+    amount
 })

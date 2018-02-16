@@ -3,20 +3,23 @@ const createConstants = (...actions) => actions.reduce((acc, key) => ({...acc, [
 export const pages = createConstants(
     'LANDING_PAGE',
     'CREATE_LOTTERY_PAGE',
-    'JOIN_EXISTING_LOTTERY_PAGE'
+    'JOIN_EXISTING_LOTTERY_PAGE',
+    'WAITING_FOR_OTHER_PLAYER_TO_JOIN'
 )
 
 export const actions = createConstants(
     'WEB3_REQUESTED',
     'WEB3_INJECTED',
-    'SET_LOTTERY_STATE',
     'CREATE_LOTTERY_REQUESTED',
     'JOIN_EXISTING_LOTTERY_REQUESTED',
     'SET_LOTTERY_CONTRACT',
-    'SHOW_ERROR'
+    'SET_LOTTERY_ID',
+    'SET_PAGE_ERROR',
+    'SET_BET_AMOUNT',
+    'SET_PAGE'
 )
 
-// lotterypages should be exact copy of State enum in Lottery contract
+// lotteryStates should be exact copy of State enum in Lottery contract
 export const lotteryStates = createConstants(
     'UNINITIALIZED',
     'LOTTERY_CREATED',

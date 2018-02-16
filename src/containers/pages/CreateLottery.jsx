@@ -2,7 +2,7 @@ import React from 'react'
 
 import {connect} from 'react-redux'
 import {mapDispatchToProps} from '../../utils/reduxUtils'
-import {createLotteryRequested, setLotteryState} from '../../actionCreators'
+import {createLotteryRequested, setPage} from '../../actionCreators'
 
 import {pages} from '../../constants'
 
@@ -14,9 +14,6 @@ import Send from 'material-ui-icons/Send'
 import Input, {InputAdornment} from 'material-ui/Input'
 import {FormControl, FormHelperText} from 'material-ui/Form'
 import Typography from 'material-ui/Typography'
-
-
-
 
 import compose from 'lodash.compose'
 
@@ -105,11 +102,11 @@ class CreateLotteryPage extends React.Component {
 export default compose(
     connect(
         _ => ({
-            error: _.get('error')
+            error: _.get('pageError')
         }),
         mapDispatchToProps({
             createLotteryRequested,
-            showLandingPage: () => setLotteryState(pages.LANDING_PAGE)
+            showLandingPage: () => setPage(pages.LANDING_PAGE)
         })
     ),
     withStyles(styles)

@@ -2,7 +2,7 @@ import React from 'react'
 
 import {connect} from 'react-redux'
 import {mapDispatchToProps} from '../../utils/reduxUtils'
-import {setLotteryState} from '../../actionCreators'
+import {setPage} from '../../actionCreators'
 
 import {pages} from '../../constants'
 
@@ -47,8 +47,8 @@ const LandingPage = ({classes, actions}) => (
 export default compose(
     connect(null,
         mapDispatchToProps({
-            showCreateLotteryPage: () => setLotteryState(pages.CREATE_LOTTERY_PAGE),
-            showJoinExistingLotteryPage: () => setLotteryState(pages.JOIN_EXISTING_LOTTERY_PAGE)
+            showCreateLotteryPage: () => setPage(pages.CREATE_LOTTERY_PAGE),
+            showJoinExistingLotteryPage: () => setPage(pages.JOIN_EXISTING_LOTTERY_PAGE)
         })
     ),
     withStyles(styles)

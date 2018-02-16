@@ -1,6 +1,6 @@
 import {call, put, takeLatest, select} from 'redux-saga/effects'
 import getWeb3 from './utils/getWeb3'
-import {web3Injected, setLotteryState, setLotteryContract, showError} from './actionCreators'
+import {web3Injected, setPage, setLotteryContract, setLotteryId, setBetAmout, setPageError} from './actionCreators'
 import {actions, pages, lotteryStates} from './constants'
 
 import Lottery from '../build/contracts/LotteryHelper.json'
@@ -16,7 +16,7 @@ function* injectWeb3() {
     
     yield put(setLotteryContract(lotteryContract))
 
-    yield put(setLotteryState(pages.LANDING_PAGE))
+    yield put(setPage(pages.LANDING_PAGE))
 }
 
 const getUserAccount = async web3 => new Promise(
@@ -32,7 +32,11 @@ const getUserAccount = async web3 => new Promise(
     }
 )
 
-function* createNewLottery(betAmount) {
+function getEventFromLogs(logs, _event) {
+    return (logs.find(({event}) => event === _event)).args
+}
+
+function* createNewLottery(action) {
     const lotteryContract = yield select(_ => _.get('lotteryContract'))
     const web3 = yield select(_ => _.get('web3'))
     
@@ -41,14 +45,21 @@ function* createNewLottery(betAmount) {
     const lotteryState = yield call(lotteryInstance.getLotteryState.call, userAccount)
 
     if(lotteryState !== lotteryStates.UNINITIALIZED) {
-        yield put(showError(
+        yield put(setPageError(
             `You've already created a lottery.
              Join your lottery using your accounts address: "${userAccount}"`
         ))
         return
     }
 
-    yield call(lotteryInstance.createLottery, betAmount)
+    const {logs} = yield call(lotteryInstance.createLottery, action.betAmount, {from: userAccount})
+    const {lotteryId, betAmount} = getEventFromLogs(logs, 'LotteryCreated')
+
+    yield put(setLotteryId(lotteryId))
+    yield put(setBetAmout(betAmount))
+    yield put(setPage(pages.WAITING_FOR_OTHER_PLAYER_TO_JOIN))
+
+    // TODO refactor state -> page, add waiting-for-other-player page
 }
 
 export default function* rootSaga() {

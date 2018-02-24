@@ -52,3 +52,13 @@ export const placeBetRequested = (userNumber, salt) => ({
     type: actions.PLACE_BET_REQUESTED,
     userNumber, salt
 })
+
+export const revealBetRequested = (userNumber, salt) => ({
+    type: actions.REVEAL_BET_REQUESTED,
+    userNumber, salt
+})
+
+export const changePageToWinnerRevealed = isWinner => ({
+    type: actions.CHANGE_PAGE_TO_WINNER_REVEALED,
+    isWinner
+})

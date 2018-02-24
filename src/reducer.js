@@ -41,6 +41,12 @@ const reducer = (state = defaultState, action) => {
                 betAmount: action.betAmount,
                 page: pages.PLACE_BET
             })
+
+        case actions.CHANGE_PAGE_TO_WINNER_REVEALED:
+            return state.merge({
+                isWinner: actions.isWinner,
+                page: pages.WINNER_REVEALED
+            })
             
         default: 
             return state

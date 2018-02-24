@@ -11,7 +11,7 @@ export default function* placeBet({userNumber, salt}) {
     const lotteryInstance = yield call(lotteryContract.deployed)
     const [userAccount] = yield call(eth.accounts)        
     
-    const numberSaltedHash = sha3(userNumber, salt)
+    const numberSaltedHash = sha3(salt, userNumber)
 
     yield call(lotteryInstance.placeBet, lotteryId, numberSaltedHash, {from: userAccount, value: betAmount})
     

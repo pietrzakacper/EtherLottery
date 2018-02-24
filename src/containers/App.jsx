@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import {connect} from 'react-redux'
-import {web3Requested} from '../actionCreators'
+import {ethRequested} from '../actionCreators'
 import {mapDispatchToProps} from '../utils/reduxUtils'
 
 import Toolbar from '../components/Toolbar'
@@ -22,17 +22,17 @@ const styles = () => ({
 
 class App extends Component {
   componentDidMount() {
-    this.props.actions.web3Requested()    
+    this.props.actions.ethRequested()    
   }
 
   render() {
-    const {web3, classes} = this.props
+    const {eth, classes} = this.props
 
     return (
       <div>
-          <Toolbar web3Loaded={!!web3}/>
+          <Toolbar ethLoaded={!!eth}/>
           <div className={classes.container}>
-          { !!web3 && <Lottery/> }
+          { !!eth && <Lottery/> }
           </div>
       </div>
     )
@@ -42,9 +42,9 @@ class App extends Component {
 export default compose(
   connect(
     _ => ({
-      web3: _.get('web3')
+      eth: _.get('eth')
     }),
-    mapDispatchToProps({web3Requested})
+    mapDispatchToProps({ethRequested})
   ),
   withStyles(styles)
 )(App)

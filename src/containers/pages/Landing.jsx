@@ -38,7 +38,7 @@ const LandingPage = ({classes, actions}) => (
         <Button onClick={actions.showCreateLotteryPage} size="large" color="primary" className={classes.button1}>
           Create a new lottery
         </Button>
-        <Button onClick={actions.showJoinExistingLotteryPage} size="large" color="secondary" className={classes.button2}>
+        <Button onClick={actions.showJoinLotteryPage} size="large" color="secondary" className={classes.button2}>
           Join an existing lottery
         </Button>
     </Paper>
@@ -47,8 +47,8 @@ const LandingPage = ({classes, actions}) => (
 export default compose(
     connect(null,
         mapDispatchToProps({
-            showCreateLotteryPage: () => setPage(pages.CREATE_LOTTERY_PAGE),
-            showJoinExistingLotteryPage: () => setPage(pages.JOIN_EXISTING_LOTTERY_PAGE)
+            showCreateLotteryPage: () => setPage(pages.CREATE_LOTTERY),
+            showJoinLotteryPage: () => setPage(pages.JOIN_LOTTERY)
         })
     ),
     withStyles(styles)

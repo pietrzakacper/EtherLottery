@@ -2,7 +2,7 @@ import React from 'react'
 
 import {connect} from 'react-redux'
 import {mapDispatchToProps} from '../../utils/reduxUtils'
-import {createLotteryRequested, setPage} from '../../actionCreators'
+import {joinLotteryRequested, setPage} from '../../actionCreators'
 
 import {pages} from '../../constants'
 
@@ -11,7 +11,7 @@ import Paper from 'material-ui/Paper'
 import Button from 'material-ui/Button'
 import Cancel from 'material-ui-icons/Cancel'
 import Send from 'material-ui-icons/Send'
-import Input, {InputAdornment} from 'material-ui/Input'
+import Input from 'material-ui/Input'
 import {FormControl, FormHelperText} from 'material-ui/Form'
 import Typography from 'material-ui/Typography'
 
@@ -44,52 +44,49 @@ const styles = theme => ({
         margingBottom: 5*theme.spacing.unit
     },
     error: {
-        color: theme.palette.error.main,
-        textAlign: 'center',
-        marginBottom: 8
+        color: theme.palette.error.main
     }
 })
 
 
-class CreateLotteryPage extends React.Component {
+class JoinLotteryPage extends React.Component {
     state = {
-        betAmount: ''
+        lotteryId: ''
     }
-    updateBetAmount = ({target}) => {
-        this.setState({betAmount: target.value})
+    updateLotteryId = ({target}) => {
+        this.setState({lotteryId: target.value})
     }
-    onCreateButtonClick = () => {
-        this.props.actions.createLotteryRequested(
-            Math.floor(this.state.betAmount)
+    onJoinButtonClick = () => {
+        this.props.actions.joinLotteryRequested(
+            this.state.lotteryId
         )
     }
     render() {
         const {classes, error, actions} = this.props
-        const {betAmount} = this.state
+        const {lotteryId} = this.state
 
         return (
         <Paper className={classes.root} elevation={4}>
             {error && <Typography className={classes.error}>{error}</Typography>}
             <Typography>
-            Enter amount of Wei that you want to bet in your lottery.
+            Enter your lotteryId.
             </Typography>
             <FormControl aria-describedby="weight-helper-text" className={classes.input}>
                 <Input
                     autoFocus={true}
-                    value={betAmount}
-                    type="number"
-                    onChange={this.updateBetAmount}
-                    endAdornment={<InputAdornment position="end">Wei</InputAdornment>}
+                    value={lotteryId}
+                    type="text"
+                    onChange={this.updateLotteryId}
                 />
-                <FormHelperText id="weight-helper-text">Bet Amount</FormHelperText>
+                <FormHelperText id="weight-helper-text">lotteryId</FormHelperText>
                 </FormControl>
             <div className={classes.buttonsContainer}>
                 <Button onClick={actions.showLandingPage} variant="raised" color="secondary">
                     Cancel
                     <Cancel className={classes.rightIcon} />
                 </Button>
-                <Button onClick={this.onCreateButtonClick}  className={classes.rightButton} variant="raised" color="primary">
-                    Create
+                <Button onClick={this.onJoinButtonClick}  className={classes.rightButton} variant="raised" color="primary">
+                    Join
                     <Send className={classes.rightIcon}/>
                 </Button>
             </div>
@@ -104,9 +101,9 @@ export default compose(
             error: _.get('pageError')
         }),
         mapDispatchToProps({
-            createLotteryRequested,
+            joinLotteryRequested,
             showLandingPage: () => setPage(pages.LANDING)
         })
     ),
     withStyles(styles)
-    )(CreateLotteryPage)
+    )(JoinLotteryPage)

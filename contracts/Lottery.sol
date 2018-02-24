@@ -35,12 +35,12 @@ contract Lottery {
     uint public timeToEnableCanceling = 24 hours;
 
 
-    event LotteryCreated(address lotteryId, address creator, uint betAmount);
-    event UserJoinedLottery(address lotteryId, address user);
-    event BetPlaced(address lotteryId, address user);
-    event RevealState(address lotteryId);
-    event BetRevealed(address lotteryId, address user);
-    event WinnerRevealed(address lotteryId, address user);
+    event LotteryCreated(address indexed lotteryId, address creator, uint betAmount);
+    event UserJoinedLottery(address indexed lotteryId, address user);
+    event BetPlaced(address indexed lotteryId, address indexed user);
+    event RevealState(address indexed lotteryId);
+    event BetRevealed(address indexed lotteryId, address indexed user);
+    event WinnerRevealed(address indexed lotteryId, address indexed user);
 
     function createLottery(uint _betAmount) public returns (address lotteryId) {
         lotteryId = msg.sender;
@@ -60,6 +60,8 @@ contract Lottery {
         LotteryData storage lottery = lotteries[_lotteryId];
         lottery.oddUser.userAddress = msg.sender;
         lottery.state = State.PLACING_BETS;
+
+        UserJoinedLottery(_lotteryId, msg.sender);
     }
 
     function isLotteryValid(address _lotteryId) private view returns (bool) {

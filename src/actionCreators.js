@@ -1,12 +1,12 @@
 import {actions} from './constants'
 
-export const web3Requested = () => ({
-    type: actions.WEB3_REQUESTED
+export const ethRequested = () => ({
+    type: actions.ETH_REQUESTED
 })
 
-export const web3Injected = web3 => ({
-    type: actions.WEB3_INJECTED,
-    web3
+export const ethInjected = eth => ({
+    type: actions.ETH_INJECTED,
+    eth
 })
 
 export const setPage = page => ({
@@ -33,12 +33,22 @@ export const setPageError = error => ({
     error
 })
 
-export const setLotteryId = id => ({
-    type: actions.SET_LOTTERY_ID,
-    id
+export const changePageToWaitForOtherPlayerToJoin = lotteryId => ({
+    type: actions.CHANGE_PAGE_TO_WAIT_FOR_OTHER_PLAYER_TO_JOIN,
+    lotteryId
 })
 
-export const setBetAmout = amount => ({
-    type: actions.SET_BET_AMOUNT,
-    amount
+export const joinLotteryRequested = lotteryId => ({
+    type: actions.JOIN_LOTTERY_REQUESTED,
+    lotteryId
+})
+
+export const changePageToPlaceBets = (otherPlayer, lotteryId, betAmount) => ({
+    type: actions.CHANGE_PAGE_TO_PLACE_BETS,
+    otherPlayer, lotteryId, betAmount
+})
+
+export const placeBetRequested = (userNumber, salt) => ({
+    type: actions.PLACE_BET_REQUESTED,
+    userNumber, salt
 })

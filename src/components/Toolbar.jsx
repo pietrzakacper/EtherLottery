@@ -17,14 +17,14 @@ const styles = {
     }
 }
 
-const Toolbar = ({web3Loaded, classes}) => (
+const Toolbar = ({ethLoaded, classes}) => (
     <AppBar position="static" color="default">
         <MUToolbar>
             <Typography variant="title" className={classes.flex}>
             EtherLottery
             </Typography>
             <Typography variant="subheading" className={classes.center}>
-            Web3 injected:{' '}{web3Loaded ? <OkIcon/> : <NotOkIcon/>}
+            Web3 injected:{' '}{ethLoaded ? <OkIcon/> : <NotOkIcon/>}
             </Typography>
         </MUToolbar>
     </AppBar>

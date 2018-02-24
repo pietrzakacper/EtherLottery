@@ -21,8 +21,9 @@ const styles = theme => ({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        height: '50%',
-        width: '50%'
+        minHeight: '50%',
+        width: '50%',
+        padding: 10*theme.spacing.unit
     }),
     header: {
       fontSize: '100%'  

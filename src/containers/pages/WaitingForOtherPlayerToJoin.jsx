@@ -16,8 +16,9 @@ const styles = theme => ({
         alignItems: 'center',
         justifyContent: 'space-around',
         flexDirection: 'column',
-        height: '50%',
-        width: '50%'
+        minHeight: '50%',
+        width: '50%',
+        padding: 10*theme.spacing.unit
     }),
     progress: {
         margin: `0 ${theme.spacing.unit * 2}px`,

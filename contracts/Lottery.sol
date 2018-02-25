@@ -41,6 +41,7 @@ contract Lottery {
     event RevealState(address indexed lotteryId);
     event BetRevealed(address indexed lotteryId, address indexed user);
     event WinnerRevealed(address indexed lotteryId, address indexed user);
+    event PrizeClaimed(address indexed lotteryId);
 
     function createLottery(uint _betAmount) public returns (address lotteryId) {
         lotteryId = msg.sender;
@@ -154,6 +155,8 @@ contract Lottery {
         LotteryData storage lottery = lotteries[_lotteryId];
 
         msg.sender.transfer(2 * lottery.betAmount);
+        PrizeClaimed(_lotteryId);
+
         lottery.state = State.LOTTERY_ENDED;
     }
 

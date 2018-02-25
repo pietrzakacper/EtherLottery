@@ -62,3 +62,7 @@ export const changePageToWinnerRevealed = isWinner => ({
     type: actions.CHANGE_PAGE_TO_WINNER_REVEALED,
     isWinner
 })
+
+export const claimRewardRequested = () => ({
+    type: actions.CLAIM_REWARD_REQUESTED
+})

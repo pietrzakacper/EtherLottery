@@ -32,7 +32,7 @@ class App extends Component {
       <div>
           <Toolbar ethLoaded={!!eth}/>
           <div className={classes.container}>
-          { !!eth && <Lottery/> }
+          {!!eth && <Lottery/>}
           </div>
       </div>
     )

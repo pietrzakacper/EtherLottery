@@ -9,7 +9,8 @@ export const pages = createConstants(
     'WAITING_FOR_OTHER_PLAYER_TO_PLACE_BET',
     'REVEAL_BET',
     'WAITING_FOR_OTHER_PLAYER_REVEAL_BET',
-    'WINNER_REVEALED'
+    'WINNER_REVEALED',
+    'PRIZE_CLAIMED'
 )
 
 export const actions = createConstants(
@@ -26,7 +27,8 @@ export const actions = createConstants(
     'PLACE_BET_REQUESTED',
     'CHANGE_PAGE_TO_WAIT_FOR_OTHER_PLAYER_TO_JOIN',
     'REVEAL_BET_REQUESTED',
-    'CHANGE_PAGE_TO_WINNER_REVEALED'
+    'CHANGE_PAGE_TO_WINNER_REVEALED',
+    'CLAIM_REWARD_REQUESTED'
 )
 
 // lotteryStates should be exact copy of State enum in Lottery contract

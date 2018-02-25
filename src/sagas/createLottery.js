@@ -9,6 +9,8 @@ export default function* createNewLottery(action) {
     const lotteryInstance = yield call(lotteryContract.deployed)
     const [userAccount] = yield call(eth.accounts)
     const lotteryState = yield call(lotteryInstance.getLotteryState.call, userAccount)
+
+    console.log(lotteryInstance)
     
     if(lotteryState !== lotteryStates.UNINITIALIZED) {
         yield put(setPageError(

@@ -8,7 +8,8 @@ const defaultState = Map({
     lotteryContract: null,
     betAmount: null,
     lotteryId: null,
-    otherPlayer: null
+    otherPlayer: null,
+    isWinner: null
 })
 
 const reducer = (state = defaultState, action) => {
@@ -44,7 +45,7 @@ const reducer = (state = defaultState, action) => {
 
         case actions.CHANGE_PAGE_TO_WINNER_REVEALED:
             return state.merge({
-                isWinner: actions.isWinner,
+                isWinner: action.isWinner,
                 page: pages.WINNER_REVEALED
             })
             

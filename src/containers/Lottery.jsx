@@ -11,6 +11,8 @@ import PlaceBet from './pages/PlaceBet'
 import WaitingForOtherPlayerToPlaceBet from './pages/WaitingForOtherPlayerToPlaceBet'
 import RevealBet from './pages/RevealBet'
 import WaitingForOtherPlayerToRevealBet from './pages/WaitingForOtherPlayerToRevealBet'
+import WinnerRevealed from './pages/WinnerRevealed'
+import PrizeClaimed from './pages/PrizeClaimed'
 
 const Lottery = ({page}) => {
     switch(page) {
@@ -30,8 +32,10 @@ const Lottery = ({page}) => {
             return <RevealBet/>
         case pages.WAITING_FOR_OTHER_PLAYER_TO_REVEAL_BET:
             return <WaitingForOtherPlayerToRevealBet/>
-
-            // TODO handle WinnerRevealed
+        case pages.WINNER_REVEALED:
+            return <WinnerRevealed/>
+        case pages.PRIZE_CLAIMED:
+            return <PrizeClaimed/>
         default:
             return <p>No matching state for ({page})</p>
     }
